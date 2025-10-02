@@ -1,6 +1,7 @@
 from flask import request, jsonify
 from app.models.user import User
 from app.extensions import db
+from app.utils.security_utils import generate_jwt
 
 def register():
     data = request.get_json()
@@ -33,5 +34,5 @@ def login():
     if user is None or not user.check_password(password):
         return jsonify({'message': 'Invalid username or password'}), 401
 
-    # Here you would typically generate and return a JWT token
-    return jsonify({'message': 'Login successful'}), 200
+    token = generate_jwt({'sub': user.id, 'username': user.username})
+    return jsonify({'token': token, 'user': {'id': user.id, 'username': user.username}}), 200

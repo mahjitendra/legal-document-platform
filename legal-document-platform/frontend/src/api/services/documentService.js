@@ -1,4 +1,4 @@
-import axios from '../axios.config';
+import axios from '../interceptors';
 
 const createDocument = (title, content) => {
   return axios.post('/documents', { title, content });

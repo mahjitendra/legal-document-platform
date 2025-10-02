@@ -1,4 +1,4 @@
-import axios from '../axios.config';
+import axios from '../interceptors';
 
 const register = (username, password) => {
   return axios.post('/auth/register', {
