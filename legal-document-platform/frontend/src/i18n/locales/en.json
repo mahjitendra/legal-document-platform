@@ -1,0 +1,9 @@
+{
+  "app.title": "Legal Document Platform",
+  "nav.login": "Login",
+  "nav.register": "Register",
+  "nav.dashboard": "Dashboard",
+  "documents.title": "My Documents",
+  "documents.create": "Create New Document"
+}
+
