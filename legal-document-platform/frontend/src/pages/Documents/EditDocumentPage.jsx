@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import documentService from '../../api/services/documentService';
 import Button from '../../components/common/Button/Button';
 import Input from '../../components/common/Input/Input';
+import Layout from '../../components/layout/Layout';
 
 const EditDocumentPage = () => {
   const { id } = useParams();
@@ -41,9 +42,9 @@ const EditDocumentPage = () => {
   };
 
   return (
-    <div>
+    <Layout>
       <h1>Edit Document</h1>
-      <form onSubmit={handleUpdateDocument}>
+      <form onSubmit={handleUpdateDocument} style={{ display: 'grid', gap: '0.5rem', maxWidth: 720 }}>
         <Input
           type="text"
           placeholder="Title"
@@ -54,13 +55,14 @@ const EditDocumentPage = () => {
           placeholder="Content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
+          rows={16}
         />
         <Button type="submit" disabled={loading}>
           {loading ? 'Updating...' : 'Update Document'}
         </Button>
         {error && <div>{error}</div>}
       </form>
-    </div>
+    </Layout>
   );
 };
 

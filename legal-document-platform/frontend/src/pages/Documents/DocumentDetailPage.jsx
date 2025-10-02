@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import documentService from '../../api/services/documentService';
 import Button from '../../components/common/Button/Button';
+import Layout from '../../components/layout/Layout';
 
 const DocumentDetailPage = () => {
   const { id } = useParams();
@@ -50,12 +51,14 @@ const DocumentDetailPage = () => {
   }
 
   return (
-    <div>
+    <Layout>
       <h1>{document.title}</h1>
       <p>{document.content}</p>
-      <Button onClick={() => navigate(`/documents/edit/${id}`)}>Edit</Button>
-      <Button onClick={handleDelete}>Delete</Button>
-    </div>
+      <div style={{ display: 'flex', gap: '0.5rem' }}>
+        <Button onClick={() => navigate(`/documents/edit/${id}`)}>Edit</Button>
+        <Button onClick={handleDelete}>Delete</Button>
+      </div>
+    </Layout>
   );
 };
 

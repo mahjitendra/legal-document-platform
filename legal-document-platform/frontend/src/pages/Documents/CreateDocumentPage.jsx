@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import documentService from '../../api/services/documentService';
 import Button from '../../components/common/Button/Button';
 import Input from '../../components/common/Input/Input';
+import Layout from '../../components/layout/Layout';
 
 const CreateDocumentPage = () => {
   const [title, setTitle] = useState('');
@@ -27,9 +28,9 @@ const CreateDocumentPage = () => {
   };
 
   return (
-    <div>
+    <Layout>
       <h1>Create New Document</h1>
-      <form onSubmit={handleCreateDocument}>
+      <form onSubmit={handleCreateDocument} style={{ display: 'grid', gap: '0.5rem', maxWidth: 720 }}>
         <Input
           type="text"
           placeholder="Title"
@@ -40,13 +41,14 @@ const CreateDocumentPage = () => {
           placeholder="Content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
+          rows={16}
         />
         <Button type="submit" disabled={loading}>
           {loading ? 'Creating...' : 'Create Document'}
         </Button>
         {error && <div>{error}</div>}
       </form>
-    </div>
+    </Layout>
   );
 };
 
