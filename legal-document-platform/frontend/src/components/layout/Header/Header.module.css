@@ -1,0 +1,42 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #fff;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.logoContainer {
+  flex: 1;
+}
+
+.navContainer {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.userMenuContainer {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mobileMenuContainer {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .navContainer {
+    display: none;
+  }
+
+  .userMenuContainer {
+    display: none;
+  }
+
+  .mobileMenuContainer {
+    display: block;
+  }
+}
