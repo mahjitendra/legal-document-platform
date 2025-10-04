@@ -1,26 +1,40 @@
 from functools import wraps
-from flask import jsonify
+from flask import request, jsonify, g, current_app
+import jwt
+from app.models.user import User
 
-# A placeholder for user authentication and role checking
-def get_current_user():
-    # In a real app, you'd get the user from the request context (e.g., JWT token)
-    # For now, we'll mock a user. Let's assume user with id 1 is an admin.
-    class MockUser:
-        def __init__(self, id, is_admin):
-            self.id = id
-            self.is_admin = is_admin
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+        if 'Authorization' in request.headers:
+            # Expected format: "Bearer <token>"
+            token = request.headers['Authorization'].split(" ")[1]
 
-    # To test the decorator, you can change the user being returned.
-    # Return a non-admin user by default. To test admin routes, return an admin user.
-    # For example: return MockUser(id=1, is_admin=True)
-    return MockUser(id=2, is_admin=False)
+        if not token:
+            return jsonify({'message': 'Token is missing!'}), 401
 
+        try:
+            data = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=["HS256"])
+            current_user = User.query.get(data['user_id'])
+            if not current_user:
+                 return jsonify({'message': 'User not found!'}), 401
+            # Store the user in the Flask global object `g` for this request
+            g.current_user = current_user
+        except jwt.ExpiredSignatureError:
+            return jsonify({'message': 'Token has expired!'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'message': 'Token is invalid!'}), 401
+
+        return f(*args, **kwargs)
+
+    return decorated
 
 def admin_required(f):
     @wraps(f)
+    @token_required
     def decorated_function(*args, **kwargs):
-        user = get_current_user()
-        if not user or not user.is_admin:
+        if not g.current_user.is_admin:
             return jsonify({'message': 'Admin access required'}), 403
         return f(*args, **kwargs)
     return decorated_function

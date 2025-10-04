@@ -1,17 +1,14 @@
-from flask import request, jsonify
+from flask import request, jsonify, g
 from app.models.payment import Payment
 from app.schemas.payment_schema import payment_schema
 from app.extensions import db
+from app.utils.decorators import token_required
 
-# A placeholder for user authentication
-def get_current_user_id():
-    # In a real application, you would get the user ID from the session or token
-    return 1
-
+@token_required
 def create_payment_intent():
     data = request.get_json()
     amount = data.get('amount')
-    user_id = get_current_user_id()
+    user_id = g.current_user.id
 
     if not amount:
         return jsonify({'message': 'Amount is required'}), 400

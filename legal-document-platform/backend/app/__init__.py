@@ -8,6 +8,7 @@ from .api.v1.payments.routes import payments_bp
 from .api.v1.signatures.routes import signatures_bp
 from .api.v1.consultations.routes import consultations_bp
 from .api.v1.admin.routes import admin_bp
+from .api.v1.templates.routes import templates_bp
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -28,5 +29,6 @@ def create_app(config_class=Config):
     app.register_blueprint(signatures_bp, url_prefix='/api/v1/signatures')
     app.register_blueprint(consultations_bp, url_prefix='/api/v1/consultations')
     app.register_blueprint(admin_bp, url_prefix='/api/v1/admin')
+    app.register_blueprint(templates_bp, url_prefix='/api/v1/templates')
 
     return app
