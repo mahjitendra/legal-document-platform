@@ -1,14 +1,23 @@
-from app.extensions import ma
-from app.models.consultation import Consultation
-from .user_schema import UserSchema
+from marshmallow import Schema, fields, validate
 
-class ConsultationSchema(ma.SQLAlchemyAutoSchema):
-    user = ma.Nested(UserSchema, only=("id", "username"))
-    lawyer = ma.Nested(UserSchema, only=("id", "username"))
-    class Meta:
-        model = Consultation
-        load_instance = True
-        include_fk = True
 
-consultation_schema = ConsultationSchema()
-consultations_schema = ConsultationSchema(many=True)
+class ConsultationSchema(Schema):
+    id = fields.Int(dump_only=True)
+    user_id = fields.Int(dump_only=True)
+    lawyer_id = fields.Int()
+    title = fields.Str(required=True)
+    description = fields.Str()
+    consultation_type = fields.Str()
+    scheduled_at = fields.DateTime(required=True)
+    duration = fields.Int()
+    status = fields.Str()
+    created_at = fields.DateTime(dump_only=True)
+
+
+class ConsultationCreateSchema(Schema):
+    lawyer_id = fields.Int()
+    title = fields.Str(required=True)
+    description = fields.Str()
+    consultation_type = fields.Str(required=True)
+    scheduled_at = fields.DateTime(required=True)
+    duration = fields.Int(missing=60)
