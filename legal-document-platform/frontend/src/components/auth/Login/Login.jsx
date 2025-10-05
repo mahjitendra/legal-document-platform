@@ -1,26 +1,30 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
-import authService from '../../../api/services/authService';
+import { useAuth } from '../../../context/AuthContext';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setMessage('');
+    setError('');
     setLoading(true);
 
     try {
-      const response = await authService.login(username, password);
-      setMessage(response.data.message);
-      // Handle successful login, e.g., store token and redirect
-    } catch (error) {
-      setMessage(error.response.data.message);
+      await login(username, password);
+      navigate('/dashboard'); // Redirect to dashboard on successful login
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || 'Login failed. Please try again.';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -35,17 +39,19 @@ const Login = () => {
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          required
         />
         <Input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
         <Button type="submit" disabled={loading}>
           {loading ? 'Logging in...' : 'Login'}
         </Button>
-        {message && <p>{message}</p>}
+        {error && <p className={styles.error}>{error}</p>}
       </form>
     </div>
   );

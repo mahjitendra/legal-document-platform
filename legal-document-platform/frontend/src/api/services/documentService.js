@@ -1,23 +1,27 @@
 import axios from '../axios.config';
 
-const createDocument = (title, content) => {
-  return axios.post('/documents', { title, content });
+const getAuthHeaders = (token) => {
+  return { headers: { Authorization: `Bearer ${token}` } };
 };
 
-const getDocuments = () => {
-  return axios.get('/documents');
+const createDocument = (title, content, token) => {
+  return axios.post('/documents', { title, content }, getAuthHeaders(token));
 };
 
-const getDocument = (id) => {
-  return axios.get(`/documents/${id}`);
+const getDocuments = (token) => {
+  return axios.get('/documents', getAuthHeaders(token));
 };
 
-const updateDocument = (id, title, content) => {
-  return axios.put(`/documents/${id}`, { title, content });
+const getDocument = (id, token) => {
+  return axios.get(`/documents/${id}`, getAuthHeaders(token));
 };
 
-const deleteDocument = (id) => {
-  return axios.delete(`/documents/${id}`);
+const updateDocument = (id, title, content, token) => {
+  return axios.put(`/documents/${id}`, { title, content }, getAuthHeaders(token));
+};
+
+const deleteDocument = (id, token) => {
+  return axios.delete(`/documents/${id}`, getAuthHeaders(token));
 };
 
 const documentService = {

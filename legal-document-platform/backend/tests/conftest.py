@@ -9,6 +9,10 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 @pytest.fixture(scope='module')
 def test_client():
+    """
+    A test client for the app, with a module-scoped database.
+    This fixture handles the creation and teardown of the database.
+    """
     flask_app = create_app('app.config.TestingConfig')
 
     # Create a test client using the Flask application configured for testing
@@ -17,13 +21,5 @@ def test_client():
         with flask_app.app_context():
             db.create_all()
             yield testing_client  # this is where the testing happens!
+            db.session.remove()
             db.drop_all()
-
-@pytest.fixture(scope='module')
-def init_database(test_client):
-    # Create the database and the database table(s)
-    db.create_all()
-
-    yield  # this is where the testing happens!
-
-    db.drop_all()

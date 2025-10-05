@@ -1,7 +1,11 @@
 import axios from '../axios.config';
 
-const createPaymentIntent = (amount) => {
-  return axios.post('/payments/create-payment-intent', { amount });
+const getAuthHeaders = (token) => {
+  return { headers: { Authorization: `Bearer ${token}` } };
+};
+
+const createPaymentIntent = (amount, token) => {
+  return axios.post('/payments/create-payment-intent', { amount }, getAuthHeaders(token));
 };
 
 const paymentService = {
