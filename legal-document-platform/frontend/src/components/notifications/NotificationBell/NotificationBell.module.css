@@ -1,0 +1,100 @@
+.bell {
+  position: relative;
+  cursor: pointer;
+  font-size: 24px;
+  padding: 8px;
+  transition: transform 0.3s;
+}
+
+.bell:hover {
+  transform: scale(1.1);
+}
+
+.badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: #e74c3c;
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.dropdown {
+  width: 320px;
+  max-height: 400px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.header h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.markAll {
+  background: none;
+  border: none;
+  color: #3498db;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.markAll:hover {
+  text-decoration: underline;
+}
+
+.list {
+  overflow-y: auto;
+  max-height: 340px;
+}
+
+.item {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.item:hover {
+  background: #f8f9fa;
+}
+
+.item.unread {
+  background: #e3f2fd;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.message {
+  font-size: 12px;
+  color: #666;
+}
+
+.empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: #999;
+}
+
+@media (max-width: 480px) {
+  .dropdown {
+    width: 280px;
+  }
+}
