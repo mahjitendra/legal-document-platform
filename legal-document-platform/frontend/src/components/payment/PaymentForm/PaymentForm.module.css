@@ -1,0 +1,30 @@
+.title {
+  margin-bottom: 20px;
+}
+
+.summary {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.amount {
+  font-weight: bold;
+  font-size: 20px;
+  color: #2ecc71;
+}
+
+.secure {
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 14px;
+  margin-top: 15px;
+}
