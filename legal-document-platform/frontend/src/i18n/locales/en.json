@@ -1,0 +1,53 @@
+{
+  "common": {
+    "welcome": "Welcome",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "navigation": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "documents": "Documents",
+    "templates": "Templates",
+    "consultations": "Consultations",
+    "profile": "Profile",
+    "about": "About",
+    "contact": "Contact",
+    "pricing": "Pricing"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "fullName": "Full Name",
+    "phone": "Phone Number",
+    "loginTitle": "Login to Your Account",
+    "registerTitle": "Create New Account",
+    "forgotPassword": "Forgot Password?",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?"
+  },
+  "documents": {
+    "title": "Documents",
+    "create": "Create Document",
+    "myDocuments": "My Documents",
+    "noDocuments": "No documents found",
+    "status": {
+      "draft": "Draft",
+      "pending": "Pending",
+      "completed": "Completed",
+      "signed": "Signed"
+    }
+  }
+}

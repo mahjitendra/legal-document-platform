@@ -1,0 +1,53 @@
+{
+  "common": {
+    "welcome": "स्वागत है",
+    "login": "लॉगिन",
+    "register": "रजिस्टर करें",
+    "logout": "लॉगआउट",
+    "submit": "जमा करें",
+    "cancel": "रद्द करें",
+    "save": "सहेजें",
+    "delete": "हटाएं",
+    "edit": "संपादित करें",
+    "view": "देखें",
+    "search": "खोजें",
+    "loading": "लोड हो रहा है...",
+    "error": "त्रुटि",
+    "success": "सफलता"
+  },
+  "navigation": {
+    "home": "होम",
+    "dashboard": "डैशबोर्ड",
+    "documents": "दस्तावेज़",
+    "templates": "टेम्पलेट",
+    "consultations": "परामर्श",
+    "profile": "प्रोफ़ाइल",
+    "about": "के बारे में",
+    "contact": "संपर्क करें",
+    "pricing": "मूल्य निर्धारण"
+  },
+  "auth": {
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "confirmPassword": "पासवर्ड की पुष्टि करें",
+    "fullName": "पूरा नाम",
+    "phone": "फ़ोन नंबर",
+    "loginTitle": "अपने खाते में लॉगिन करें",
+    "registerTitle": "नया खाता बनाएं",
+    "forgotPassword": "पासवर्ड भूल गए?",
+    "alreadyHaveAccount": "क्या आपके पास पहले से एक खाता मौजूद है?",
+    "dontHaveAccount": "क्या आपके पास खाता नहीं है?"
+  },
+  "documents": {
+    "title": "दस्तावेज़",
+    "create": "दस्तावेज़ बनाएं",
+    "myDocuments": "मेरे दस्तावेज़",
+    "noDocuments": "कोई दस्तावेज़ नहीं मिला",
+    "status": {
+      "draft": "ड्राफ्ट",
+      "pending": "लंबित",
+      "completed": "पूर्ण",
+      "signed": "हस्ताक्षरित"
+    }
+  }
+}

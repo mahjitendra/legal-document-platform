@@ -1,47 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import documentService from '../../api/services/documentService';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useDocuments } from '../../hooks/useDocuments';
+import DocumentList from '../../components/documents/DocumentList/DocumentList';
+import SearchBar from '../../components/search/SearchBar/SearchBar';
+import Button from '../../components/common/Button/Button';
 
 const DocumentsPage = () => {
-  const [documents, setDocuments] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const { documents, loading, fetchDocuments } = useDocuments();
+  const [filteredDocuments, setFilteredDocuments] = useState([]);
 
   useEffect(() => {
-    const fetchDocuments = async () => {
-      setLoading(true);
-      try {
-        const response = await documentService.getDocuments();
-        setDocuments(response.data);
-      } catch (err) {
-        setError('Failed to fetch documents.');
-      } finally {
-        setLoading(false);
-      }
-    };
+    setFilteredDocuments(documents);
+  }, [documents]);
 
-    fetchDocuments();
-  }, []);
+  const handleSearch = (searchTerm) => {
+    if (!searchTerm) {
+      setFilteredDocuments(documents);
+      return;
+    }
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
+    const filtered = documents.filter(doc =>
+      doc.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      doc.description?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredDocuments(filtered);
+  };
 
   return (
-    <div>
-      <h1>My Documents</h1>
-      <Link to="/documents/create">Create New Document</Link>
-      <ul>
-        {documents.map((doc) => (
-          <li key={doc.id}>
-            <Link to={`/documents/${doc.id}`}>{doc.title}</Link>
-          </li>
-        ))}
-      </ul>
+    <div style={{ padding: '30px', maxWidth: '1400px', margin: '0 auto' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', flexWrap: 'wrap', gap: '15px' }}>
+        <h1 style={{ margin: 0 }}>My Documents</h1>
+        <Button onClick={() => navigate('/documents/create')}>
+          + Create Document
+        </Button>
+      </div>
+
+      <div style={{ marginBottom: '30px' }}>
+        <SearchBar onSearch={handleSearch} placeholder="Search documents..." />
+      </div>
+
+      <DocumentList documents={filteredDocuments} loading={loading} />
     </div>
   );
 };
