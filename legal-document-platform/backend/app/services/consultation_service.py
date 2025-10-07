@@ -1,50 +1,70 @@
-from app.models.consultation import Consultation, ConsultationStatus
-from app.models.user import User
+from app.models.consultation import Consultation
 from app.extensions import db
 from datetime import datetime
 
 class ConsultationService:
     @staticmethod
-    def book_consultation(user_id, lawyer_id, start_time, end_time):
-        """
-        Books a new consultation for a user with a lawyer.
-        """
-        if not all([lawyer_id, start_time, end_time]):
-            raise ValueError('Lawyer ID, start time, and end time are required')
-
-        try:
-            start_dt = datetime.fromisoformat(start_time)
-            end_dt = datetime.fromisoformat(end_time)
-        except (TypeError, ValueError):
-            raise ValueError('Invalid datetime format. Use ISO 8601 format.')
-
-        if start_dt >= end_dt:
-            raise ValueError('Start time must be before end time')
-
-        # Check if the lawyer exists and is actually a lawyer (admin for now)
-        lawyer = User.query.filter_by(id=lawyer_id, is_admin=True).first()
-        if not lawyer:
-            raise ValueError('Lawyer not found or user is not a lawyer')
-
-        # In a real app, you would check for lawyer availability conflicts.
-        # This is a simplified implementation.
-
-        new_consultation = Consultation(
-            user_id=user_id,
-            lawyer_id=lawyer_id,
-            start_time=start_dt,
-            end_time=end_dt,
-            status=ConsultationStatus.SCHEDULED
+    def create_consultation(data):
+        consultation = Consultation(
+            user_id=data.get('user_id'),
+            lawyer_id=data.get('lawyer_id'),
+            type=data.get('type', 'video'),
+            scheduled_at=data.get('scheduled_at'),
+            duration=data.get('duration', 30),
+            notes=data.get('notes'),
+            status='scheduled'
         )
-        db.session.add(new_consultation)
+
+        db.session.add(consultation)
         db.session.commit()
-        return new_consultation
+
+        return consultation
+
+    @staticmethod
+    def get_consultation(consultation_id):
+        return Consultation.query.get(consultation_id)
 
     @staticmethod
     def get_user_consultations(user_id):
-        """
-        Retrieves all consultations where the user is either the client or the lawyer.
-        """
+        return Consultation.query.filter_by(user_id=user_id)\
+            .order_by(Consultation.scheduled_at.desc()).all()
+
+    @staticmethod
+    def update_consultation(consultation_id, data):
+        consultation = Consultation.query.get(consultation_id)
+
+        if not consultation:
+            return None
+
+        if 'scheduled_at' in data:
+            consultation.scheduled_at = data['scheduled_at']
+        if 'status' in data:
+            consultation.status = data['status']
+        if 'notes' in data:
+            consultation.notes = data['notes']
+        if 'meeting_link' in data:
+            consultation.meeting_link = data['meeting_link']
+
+        db.session.commit()
+
+        return consultation
+
+    @staticmethod
+    def cancel_consultation(consultation_id):
+        consultation = Consultation.query.get(consultation_id)
+
+        if not consultation:
+            return False
+
+        consultation.status = 'cancelled'
+        db.session.commit()
+
+        return True
+
+    @staticmethod
+    def get_upcoming_consultations(user_id):
         return Consultation.query.filter(
-            (Consultation.user_id == user_id) | (Consultation.lawyer_id == user_id)
-        ).order_by(Consultation.start_time.desc()).all()
+            Consultation.user_id == user_id,
+            Consultation.scheduled_at > datetime.utcnow(),
+            Consultation.status == 'scheduled'
+        ).order_by(Consultation.scheduled_at).all()
