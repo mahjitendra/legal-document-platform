@@ -1,27 +1,47 @@
 [data-theme="light"] {
   --bg-primary: #ffffff;
-  --bg-secondary: #f5f5f5;
-  --bg-tertiary: #e0e0e0;
-  --text-primary: #333333;
-  --text-secondary: #666666;
-  --text-muted: #999999;
-  --border-color: #dddddd;
-  --shadow: rgba(0, 0, 0, 0.1);
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #ecf0f1;
+
+  --text-primary: #2c3e50;
+  --text-secondary: #7f8c8d;
+  --text-muted: #95a5a6;
+
+  --border-color: #ddd;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 [data-theme="dark"] {
   --bg-primary: #1a1a1a;
   --bg-secondary: #2d2d2d;
-  --bg-tertiary: #404040;
-  --text-primary: #ffffff;
-  --text-secondary: #cccccc;
-  --text-muted: #999999;
+  --bg-tertiary: #3d3d3d;
+
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-muted: #808080;
+
   --border-color: #404040;
-  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-body {
+body[data-theme="dark"] {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+body[data-theme="dark"] input,
+body[data-theme="dark"] textarea,
+body[data-theme="dark"] select {
   background-color: var(--bg-secondary);
   color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+body[data-theme="dark"] .card {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.theme-transition {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
